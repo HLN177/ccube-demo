@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend api for complycube demo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "dotenvx run -- ts-node-dev --respawn --transpile-only ./index.ts",
+    "test": "jest"
+  },
+  "author": "HL",
+  "license": "ISC",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.32.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
