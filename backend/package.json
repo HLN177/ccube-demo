@@ -10,6 +10,7 @@
   "author": "HL",
   "license": "ISC",
   "dependencies": {
+    "@complycube/api": "^1.1.11",
     "@dotenvx/dotenvx": "^1.32.1",
     "cors": "^2.8.5",
     "express": "^4.21.2",
