@@ -14,6 +14,7 @@ export default defineConfig({
       ],
       imports: [
         'react',
+        'vitest'
       ],
       dts: './auto-imports.d.ts'
     }),
@@ -30,5 +31,5 @@ export default defineConfig({
       '.ts',
       '.tsx',
     ]
-  },
+  }
 })
