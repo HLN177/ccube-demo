@@ -49,6 +49,7 @@ This application is designed for local development and testing, with the flexibi
 ### **Prerequisites**
 - Node.js (v16+)
 - npm or yarn
+- complycube api key
 
 ### **1. Frontend**
 
