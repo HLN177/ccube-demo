@@ -1,7 +1,7 @@
 import type { Application, Request, Response } from 'express';
 import { validate } from '../middlewares/validateResource';
-import { createAuthTokenHandler } from '../controllers/auth.controller';
-import { createAuthTokenSchema } from '../schemas/auth.shema';
+import { createAuthTokenHandler, createCheckHandler, getCheckHandler } from '../controllers/auth.controller';
+import { createAuthTokenSchema, createCheckSchema, getCheckSchema } from '../schemas/auth.shema';
 
 /**
  * taking http request and forward to controller
@@ -13,7 +13,9 @@ function routes(app: Application) {
 
   app.post('/api/createtoken', [validate(createAuthTokenSchema)], createAuthTokenHandler);
 
-  // app.post('/api/createcheck');
+  app.post('/api/createcheck', [validate(createCheckSchema)], createCheckHandler);
+
+  app.get('/api/getcheckresult/:checkId', [validate(getCheckSchema)], getCheckHandler);
 }
 
 export { routes };

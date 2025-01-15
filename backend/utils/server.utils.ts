@@ -8,7 +8,9 @@ function createServer() {
 
   app.use(cors({
     origin: process.env.ORIGIN, // tell browser to accept request from this endpoint
-    exposedHeaders: ['x-access-token'] // tell the browser which response headers could be read by scripts
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    exposedHeaders: ['x-access-token'], // tell the browser which response headers could be read by scripts
+    allowedHeaders: ["Content-Type"]
   }));
 
   app.use(bodyParser.json());
