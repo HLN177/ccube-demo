@@ -15,7 +15,7 @@ The CCube Verification Demo is a sample application designed to demonstrate user
 - Integration with the **ComplyCube Web SDK** for real-time identity verification.
 - Responsive design using **Material-UI**.
 - Form submission status indicators (loading, success, error).
-- Deployed on **Vercel**, enabling automatic CI/CD for rapid updates
+- Deployed on **Vercel**, enabling automatic CI/CD for rapid updates. Preview visit: https://ccube-demo.vercel.app/
 
 ### **Backend**
 - API endpoints for creating authentication tokens and initiating verification checks.
