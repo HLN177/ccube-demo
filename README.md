@@ -1,33 +1,54 @@
-# **CCube Verification Demo**
+# **CCube Document & Identity Verification Project**
 
 ## **Introduction**
-The CCube Verification Demo is a sample application designed to demonstrate user identity verification using the ComplyCube Web SDK and API. The project includes:
-- **Frontend**: A **React**-based user interface deployed on **Vercel** for ease of hosting and scaling.
-- **Backend**: A **Node.js** and **Express-based** API, refactored with **serverless-http** to support AWS Lambda deployment that interacts with ComplyCube’s API and includes middleware validation using **Zod**.
-
+This project is a full-stack application designed for document and identity verification using the **ComplyCube Web SDK**. It includes a React-based frontend and an Express backend, deployed to **Vercel** and **AWS Lambda** respectively.
 
 ---
 
 ## **Features**
 
 ### **Frontend**
-- User-friendly form for collecting personal details (email, name, date of birth).
-- Integration with the **ComplyCube Web SDK** for real-time identity verification.
-- Responsive design using **Material-UI**.
-- Form submission status indicators (loading, success, error).
+
+- Built with **React**, **MUI** for UI components, and **Vite** for a fast development environment.
+- Integrates **ComplyCube Web SDK** for user document verification.
 - Deployed on **Vercel**, enabling automatic CI/CD for rapid updates. Preview visit: https://ccube-demo.vercel.app/
 
 ### **Backend**
-- API endpoints for creating authentication tokens and initiating verification checks.
-- Integration with ComplyCube’s API using **Axios**.
-- Structured error handling.
+
+- Built with **Express** and **serverless-http**.
 - Form validation with **Zod** for request payloads.
+- Uses **Serverless Framework** with **AWS Lambda** and **API Gateway** for serverless deployment.
 - Unit testing with **Jest**.
-- Serverless deployment
-  - Express app to support **AWS Lambda** using **serverless-http**.
-  - Deployed via **Serverless** Framework v4
-  - Bundled using **esbuild** for deployment.
-  - Hosted on AWS Lambda with **API Gateway** as the routing layer.
+- Includes APIs for generating tokens and retrieving document check statuses.
+
+---
+
+## Folder Structure
+
+```plaintext
+project-root/
+│
+├── frontend/               # React frontend application
+│   ├── src/
+│   │   ├── components/     # Reusable React components
+│   │   ├── api/            # Axios services
+│   │   ├── assets/         # Static assets
+│   │   ├── shared/         # i18n
+│   │   └── main.tsx        # Application entry point
+│   ├── playwright/         # E2E tests with Playwright
+│   └── vite.config.ts      # Vite configuration
+│
+├── backend/                # Express backend application
+│   ├── src/
+│   │   ├── controllers/    # API controllers
+│   │   ├── services/       # Business logic
+│   │   ├── middlewares/    # Custom middlewares
+│   │   ├── utils/          # Utility functions
+│   │   ├── schemas/        # Zod validation schemas
+│   │   └── index.ts        # Application entry point
+│   ├── serverless.yml      # Serverless deployment configuration
+│   └── jest.config.js      # Jest configuration
+```
 
 ---
 
@@ -35,19 +56,19 @@ The CCube Verification Demo is a sample application designed to demonstrate user
 
 ### **Frontend**
 - **React**: UI library.
-- **Vite**: Fast build tool.
-- **Material-UI (MUI)**: Component library for styling.
+- **MUI**: Component library for styling and responsive design.
+- **Vite**: Development build tool for optimized frontend development.
+- **Axios**: For handling HTTP requests.
+- **Playwright**: For E2E testing.
 - **i18next**: Internationalization library.
-- **Axios**: HTTP client for making API requests.
 
 ### **Backend**
-- **Node.js**: JavaScript runtime.
-- **Express**: Web framework.
-- **Zod**: Schema validation for request payloads.
-
+- **Express**: Web framework for handling API requests.
+- **Zod**: Schema validation for API inputs.
+- **Axios**: For backend-to-backend HTTP requests.
+- **Serverless Framework**: For deploying the backend as AWS Lambda functions.
+- **ESBuild** (indirect): For bundling backend code for Lambda.
 - **Jest**: Testing framework for backend unit testing.
-- **serverless-http**: Middleware to adapt Express for AWS Lambda.
-- **Serverless Framework**: Deployment automation for AWS Lambda and API Gateway.
 
 ---
 
@@ -96,12 +117,14 @@ The CCube Verification Demo is a sample application designed to demonstrate user
    npm install
    ```
 
-3. Start the development server:
+3. Fill in env variables in template.yml
+
+4. Start the development server:
    ```bash
    serverless offline
    ```
 
-4. build and deploy the backend in AWS lambda:
+5. build and deploy the backend in AWS lambda:
    ```bash
    serverless deploy
    ```
@@ -110,7 +133,15 @@ The CCube Verification Demo is a sample application designed to demonstrate user
 
 ## **Testing**
 
-### **Backend Tests**
+### **Frontend Integration Tests**
+Run unit tests using Jest:
+```bash
+cd frontend
+npm run test:e2e
+npm run test:e2e:ui
+```
+
+### **Backend Unit Tests**
 Run unit tests using Jest:
 ```bash
 cd backend
@@ -118,22 +149,26 @@ npm run test
 ```
 
 ---
+## High-Level Architecture
 
-## **API Endpoints**
+### **Frontend**:
+- **React App** hosted on Vercel.
+- Fetches APIs from the backend for generating tokens and initiating document checks.
+- Uses the **ComplyCube Web SDK** for handling document uploads and identity verification.
 
-### **GET `/healthcheck`**
-Check the backend service health.
+### **Backend**:
+- **Express APIs**:
+  - `/healthcheck`: Health check endpoint.
+  - `/api/createtoken`: Generates tokens for SDK integration.
+  - `/api/createcheck`: Initiates document verification.
+  - `/api/getcheckresult/:checkId`: Fetches verification results.
+- **Serverless Framework**:
+  - Deployed as AWS Lambda functions.
+  - Uses AWS API Gateway for routing.
 
-### **POST `/api/createtoken`**
-Generate a ComplyCube authentication token.
-
-### **POST `/api/createcheck`**
-Create an identity verification check.
-
-### **GET `/api/getcheckresult/{checkId}`**
-Retrieve the result of a verification check.
 
 ---
 
 ## **Future Improvements**
-- **E2E Testing**: Add Cypress to test the entire application workflow.
+- Cypress to test the entire application workflow.
+- Optimize build and deployment processes for CI/CD pipelines.
