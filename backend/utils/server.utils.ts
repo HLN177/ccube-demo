@@ -7,7 +7,7 @@ function createServer() {
   const app: Express = express();
 
   app.use(cors({
-    origin: process.env.ORIGIN, // tell browser to accept request from this endpoint
+    origin: '*', // tell browser to accept request from this endpoint
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     exposedHeaders: ['x-access-token'], // tell the browser which response headers could be read by scripts
     allowedHeaders: ["Content-Type"]

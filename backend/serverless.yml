@@ -1,0 +1,38 @@
+service: ccube-backend
+
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-west-2
+  environment:
+    COMPLY_CUBE_API_KEY: comply_cube_api_key
+
+functions:
+  ccube:
+    handler: ./index.handler
+    events:
+      - http:
+          path: /healthcheck
+          method: get
+          integration: lambda_proxy
+          cors: true
+      - http:
+          path: /api/createtoken
+          method: post
+          integration: lambda_proxy
+          cors: true
+      - http:
+          path: /api/createcheck
+          method: post
+          integration: lambda_proxy
+          cors: true
+      - http:
+          path: /api/getcheckresult/{checkId}
+          method: get
+          integration: lambda_proxy
+          cors: true
+
+plugins:
+  - serverless-offline

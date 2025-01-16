@@ -1,9 +1,6 @@
-import {createServer} from './utils/server.utils'
-
-const port = process.env.PORT || 4000;
+import { createServer } from './utils/server.utils'
+import serverless from 'serverless-http';
 
 const app = createServer();
 
-app.listen(port, async () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+export const handler = serverless(app);
