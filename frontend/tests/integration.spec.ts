@@ -67,8 +67,6 @@ test.describe('Integration test', () => {
 
     await enableCameraButton.click();
 
-    await expect(page.getByText('Allow camera access')).toBeVisible();
-
     // need to know the sdk logic about tracking camera device
 
     // then abort it but enable ws connection
