@@ -39,13 +39,12 @@ project-root/
 │   └── vite.config.ts      # Vite configuration
 │
 ├── backend/                # Express backend application
-│   ├── src/
-│   │   ├── controllers/    # API controllers
-│   │   ├── services/       # Business logic
-│   │   ├── middlewares/    # Custom middlewares
-│   │   ├── utils/          # Utility functions
-│   │   ├── schemas/        # Zod validation schemas
-│   │   └── index.ts        # Application entry point
+│   ├── controllers/        # API controllers
+│   ├── services/           # Business logic
+│   ├── middlewares/        # Custom middlewares
+│   ├── utils/              # Utility functions
+│   ├── schemas/            # Zod validation schemas
+│   └── index.ts            # Application entry point
 │   ├── serverless.yml      # Serverless deployment configuration
 │   └── jest.config.js      # Jest configuration
 ```
@@ -134,7 +133,7 @@ project-root/
 ## **Testing**
 
 ### **Frontend Integration Tests**
-Run unit tests using Jest:
+Run unit tests using playwright:
 ```bash
 cd frontend
 npm run test:e2e
