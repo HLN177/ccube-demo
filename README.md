@@ -2,10 +2,9 @@
 
 ## **Introduction**
 The CCube Verification Demo is a sample application designed to demonstrate user identity verification using the ComplyCube Web SDK and API. The project includes:
-- **Frontend**: A React-based user interface for collecting user details and initiating verification.
-- **Backend**: A Node.js and Express application that interacts with ComplyCube’s API and includes validation using **Zod**.
+- **Frontend**: A **React**-based user interface deployed on **Vercel** for ease of hosting and scaling.
+- **Backend**: A **Node.js** and **Express-based** API, refactored with **serverless-http** to support AWS Lambda deployment that interacts with ComplyCube’s API and includes middleware validation using **Zod**.
 
-This application is designed for local development and testing, with the flexibility to deploy to traditional servers or containers.
 
 ---
 
@@ -13,9 +12,10 @@ This application is designed for local development and testing, with the flexibi
 
 ### **Frontend**
 - User-friendly form for collecting personal details (email, name, date of birth).
-- Integration with the ComplyCube Web SDK for real-time identity verification.
-- Responsive design using Material-UI.
+- Integration with the **ComplyCube Web SDK** for real-time identity verification.
+- Responsive design using **Material-UI**.
 - Form submission status indicators (loading, success, error).
+- Deployed on **Vercel**, enabling automatic CI/CD for rapid updates
 
 ### **Backend**
 - API endpoints for creating authentication tokens and initiating verification checks.
@@ -23,6 +23,11 @@ This application is designed for local development and testing, with the flexibi
 - Structured error handling.
 - Form validation with **Zod** for request payloads.
 - Unit testing with **Jest**.
+- Serverless deployment
+  - Express app to support **AWS Lambda** using **serverless-http**.
+  - Deployed via **Serverless** Framework v4
+  - Bundled using **esbuild** for deployment.
+  - Hosted on AWS Lambda with **API Gateway** as the routing layer.
 
 ---
 
@@ -33,13 +38,16 @@ This application is designed for local development and testing, with the flexibi
 - **Vite**: Fast build tool.
 - **Material-UI (MUI)**: Component library for styling.
 - **i18next**: Internationalization library.
+- **Axios**: HTTP client for making API requests.
 
 ### **Backend**
 - **Node.js**: JavaScript runtime.
 - **Express**: Web framework.
 - **Zod**: Schema validation for request payloads.
-- **Axios**: HTTP client for making API requests.
+
 - **Jest**: Testing framework for backend unit testing.
+- **serverless-http**: Middleware to adapt Express for AWS Lambda.
+- **Serverless Framework**: Deployment automation for AWS Lambda and API Gateway.
 
 ---
 
@@ -48,6 +56,7 @@ This application is designed for local development and testing, with the flexibi
 
 ### **Prerequisites**
 - Node.js (v16+)
+- Serverless v4
 - npm or yarn
 - complycube api key
 
@@ -89,12 +98,12 @@ This application is designed for local development and testing, with the flexibi
 
 3. Start the development server:
    ```bash
-   npm run dev
+   serverless offline
    ```
 
-4. build the backend server in production:
+4. build and deploy the backend in AWS lambda:
    ```bash
-   npm run build
+   serverless deploy
    ```
 
 ---
@@ -106,22 +115,6 @@ Run unit tests using Jest:
 ```bash
 cd backend
 npm run test
-```
-
-#### Example Jest Test File
-Here’s an example of how the backend uses Jest to test API functionality:
-
-```javascript
-import request from 'supertest';
-import app from '../src/index';
-
-describe('GET /healthcheck', () => {
-  it('should return status ok', async () => {
-    const response = await request(app).get('/healthcheck');
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ status: 'ok' });
-  });
-});
 ```
 
 ---
@@ -142,47 +135,5 @@ Retrieve the result of a verification check.
 
 ---
 
-## **Key Features of Backend**
-
-### **1. Validation with Zod**
-The backend uses **Zod** to validate API request payloads.  
-Example schema for token creation:
-```typescript
-import { object, string } from 'zod';
-
-export const createAuthTokenSchema = object({
-  body: object({
-    email: string().email('Invalid email format'),
-  }),
-});
-```
-
-Validation is integrated with Express middleware:
-```typescript
-import { createAuthTokenSchema } from './validation/schemas';
-import validateResource from './middleware/validateResource';
-
-app.post('/api/createtoken', validateResource(createAuthTokenSchema), createAuthTokenHandler);
-```
-
-### **2. Axios for API Requests**
-Axios is used to communicate with the ComplyCube API:
-```typescript
-import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'https://api.complycube.com',
-});
-
-export async function createClient(data: any) {
-  const response = await apiClient.post('/clients', data);
-  return response.data;
-}
-```
-
----
-
 ## **Future Improvements**
 - **E2E Testing**: Add Cypress to test the entire application workflow.
-- **Advanced Logging**: Use Winston or a similar library for backend logging.
-- **Dockerization**: Provide Docker images for easier deployment.
